@@ -7,17 +7,22 @@
 }
 
 :root {
-    --bg-primary: #121212;
-    --bg-secondary: #181818;
-    --bg-tertiary: #282828;
-    --bg-hover: #2a2a2a;
-    --text-primary: #ffffff;
-    --text-secondary: #b3b3b3;
-    --accent-primary: #1db954;
-    --accent-hover: #1ed760;
-    --border-color: #282828;
-    --cassette-color: #ff6b6b;
-    --cassette-window: #2d2d2d;
+    /* Heavenly Light Theme - Spiritual & Uplifting */
+    --bg-primary: #FAFBFC;
+    --bg-secondary: #FFFFFF;
+    --bg-tertiary: #F0F4F8;
+    --bg-hover: #E8F0F8;
+    --text-primary: #1A2332;
+    --text-secondary: #5A6C7D;
+    --accent-primary: #4A90E2;
+    --accent-hover: #357ABD;
+    --border-color: #E1E8ED;
+    --cassette-color: #4A90E2;
+    --cassette-window: #E8F4F8;
+    --gold-highlight: #F4B942;
+    --shadow-sm: 0 1px 3px rgba(26, 35, 50, 0.08);
+    --shadow-md: 0 4px 6px rgba(26, 35, 50, 0.1);
+    --shadow-lg: 0 10px 20px rgba(26, 35, 50, 0.12);
 }
 
 body {
@@ -251,18 +256,20 @@ body {
 .btn-primary {
     padding: 10px 24px;
     background-color: var(--accent-primary);
-    color: var(--text-primary);
+    color: #ffffff;
     border: none;
-    border-radius: 20px;
-    font-weight: 600;
+    border-radius: 500px;
     font-size: 14px;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover {
     background-color: var(--accent-hover);
     transform: scale(1.04);
+    box-shadow: var(--shadow-md);
 }
 
 .btn-secondary {
@@ -308,13 +315,86 @@ body {
     margin-bottom: 32px;
 }
 
-.music-card {
-    background-color: var(--bg-secondary);
-    padding: 16px;
-    border-radius: 8px;
+/* Featured Playlists Grid */
+.featured-playlists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.featured-playlist-card {
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-hover) 100%);
+    border-radius: 12px;
+    padding: 20px;
     cursor: pointer;
     transition: all 0.3s;
     position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    color: #ffffff;
+}
+
+.featured-playlist-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.featured-playlist-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.featured-playlist-card:hover::before {
+    opacity: 1;
+}
+
+.featured-playlist-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.featured-playlist-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+.featured-playlist-description {
+    font-size: 13px;
+    line-height: 1.5;
+    opacity: 0.9;
+    margin-bottom: 12px;
+    color: #ffffff;
+}
+
+.featured-playlist-count {
+    font-size: 12px;
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #ffffff;
+}
+
+.music-card {
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
 }
 
 .music-card:hover {
@@ -343,7 +423,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(255, 255, 255, 0.95);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -359,7 +439,7 @@ body {
     width: 48px;
     height: 48px;
     color: var(--text-primary);
-    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    filter: drop-shadow(0 2px 8px rgba(74, 144, 226, 0.4));
 }
 
 .music-card-title {
@@ -385,16 +465,16 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 90px;
     background-color: var(--bg-secondary);
-    border-top: 1px solid var(--border-color);
+    padding: 16px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 16px;
-    padding-bottom: max(0px, env(safe-area-inset-bottom));
     gap: 16px;
+    border-top: 1px solid var(--border-color);
     z-index: 100;
+    height: 90px;
+    box-shadow: 0 -2px 10px rgba(26, 35, 50, 0.08);
 }
 
 .player-track-info {
@@ -605,7 +685,9 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(26, 35, 50, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     display: none;
     align-items: center;
     justify-content: center;
@@ -652,13 +734,13 @@ body {
 .cassette-body {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
     border-radius: 12px;
     padding: 20px;
     box-shadow: 
-        0 10px 40px rgba(0, 0, 0, 0.5),
-        inset 0 2px 4px rgba(255, 255, 255, 0.2),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+        0 10px 40px rgba(74, 144, 226, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.4),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
 }
 
@@ -688,25 +770,25 @@ body {
 }
 
 .cassette-window {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(232, 244, 248, 0.9);
     border-radius: 8px;
     padding: 20px;
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-bottom: 16px;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 2px 8px rgba(26, 35, 50, 0.15);
 }
 
 .reel {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background: radial-gradient(circle, #1a1a1a 0%, #0a0a0a 100%);
+    background: radial-gradient(circle, #2C3E50 0%, #1A2332 100%);
     position: relative;
     box-shadow: 
-        0 2px 8px rgba(0, 0, 0, 0.5),
-        inset 0 2px 4px rgba(255, 255, 255, 0.1);
+        0 2px 8px rgba(26, 35, 50, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2);
 }
 
 .reel.playing {
@@ -837,7 +919,9 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(26, 35, 50, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     display: none;
     align-items: center;
     justify-content: center;
@@ -984,21 +1068,20 @@ body {
 }
 
 .music-card-menu-btn {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(74, 144, 226, 0.9);
     border: none;
-    color: var(--text-primary);
+    color: #ffffff;
     padding: 8px;
     border-radius: 50%;
     cursor: pointer;
+    transition: all 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
-    backdrop-filter: blur(4px);
 }
 
 .music-card-menu-btn:hover {
-    background: rgba(0, 0, 0, 0.9);
+    background: var(--accent-primary);
     transform: scale(1.1);
 }
 
@@ -1008,26 +1091,7 @@ body {
 
 .music-card-menu-btn.remove-btn:hover {
     background: rgba(255, 68, 68, 0.9);
-}
-
-/* Always show menu buttons on mobile/touch devices */
-@media (hover: none) and (pointer: coarse) {
-    .music-card-menu {
-        opacity: 1;
-    }
-
-    .music-card-menu-btn {
-        background: rgba(0, 0, 0, 0.8);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .music-card-menu-btn.remove-btn {
-        background: rgba(255, 68, 68, 0.85);
-    }
-
-    .music-card-menu-btn:active {
-        transform: scale(0.9);
-    }
+    transform: scale(1.1);
 }
 
 /* API Key Management Modal */
@@ -1037,7 +1101,9 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(26, 35, 50, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     display: none;
     align-items: center;
     justify-content: center;
@@ -1227,7 +1293,9 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(26, 35, 50, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     z-index: 999;
     opacity: 0;
     transition: opacity 0.3s;
@@ -1313,6 +1381,23 @@ body.menu-open {
     .music-grid {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
         gap: 12px;
+    }
+
+    .featured-playlists-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .featured-playlist-card {
+        padding: 16px;
+    }
+
+    .featured-playlist-name {
+        font-size: 16px;
+    }
+
+    .featured-playlist-description {
+        font-size: 12px;
     }
 
     /* Player Bar Mobile */
@@ -1442,6 +1527,33 @@ body.menu-open {
     .music-grid {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
         gap: 10px;
+    }
+
+    .featured-playlists-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .featured-playlist-card {
+        padding: 14px;
+    }
+
+    .featured-playlist-icon {
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+
+    .featured-playlist-name {
+        font-size: 15px;
+    }
+
+    .featured-playlist-description {
+        font-size: 11px;
+        margin-bottom: 10px;
+    }
+
+    .featured-playlist-count {
+        font-size: 11px;
     }
 
     .music-card {
@@ -1669,7 +1781,7 @@ body.menu-open {
     color: var(--text-primary);
     padding: 16px 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow-lg);
     z-index: 10000;
     display: flex;
     align-items: center;
@@ -1678,6 +1790,7 @@ body.menu-open {
     max-width: 400px;
     animation: slideIn 0.3s ease-out;
     border-left: 4px solid var(--accent-primary);
+    border: 1px solid var(--border-color);
 }
 
 .custom-notification.success {
@@ -1763,7 +1876,9 @@ body.menu-open {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(26, 35, 50, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2215,9 +2330,9 @@ html {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: rgba(26, 35, 50, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     z-index: 10000;
     padding: 20px;
     overflow-y: auto;
@@ -2234,8 +2349,9 @@ html {
     border-radius: 12px;
     max-width: 600px;
     width: 100%;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--shadow-lg);
     animation: modalSlideIn 0.3s ease-out;
+    border: 1px solid var(--border-color);
 }
 
 @keyframes modalSlideIn {

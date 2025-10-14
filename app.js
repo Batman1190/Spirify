@@ -2493,6 +2493,41 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+// Display Featured Playlists in Home View
+function displayFeaturedPlaylists() {
+    const container = document.getElementById('featuredPlaylists');
+    container.innerHTML = '';
+    
+    playlistManager.presetPlaylists.forEach(playlist => {
+        const card = document.createElement('div');
+        card.className = 'featured-playlist-card';
+        
+        // Extract emoji from name if present
+        const emoji = playlist.name.match(/[\u{1F300}-\u{1F9FF}]/u)?.[0] || '🎵';
+        const nameWithoutEmoji = playlist.name.replace(/[\u{1F300}-\u{1F9FF}]/gu, '').trim();
+        
+        card.innerHTML = `
+            <div class="featured-playlist-icon">${emoji}</div>
+            <div class="featured-playlist-name">${nameWithoutEmoji}</div>
+            <div class="featured-playlist-description">${playlist.description}</div>
+            <div class="featured-playlist-count">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18V5l12-2v13"/>
+                    <circle cx="6" cy="18" r="3"/>
+                    <circle cx="18" cy="16" r="3"/>
+                </svg>
+                ${playlist.tracks.length > 0 ? `${playlist.tracks.length} songs` : 'Click to load songs'}
+            </div>
+        `;
+        
+        card.addEventListener('click', () => {
+            playlistManager.loadPlaylistView(playlist.id);
+        });
+        
+        container.appendChild(card);
+    });
+}
+
 // Initialize App
 window.addEventListener('load', () => {
     if (apiKeyRotator.apiKeys.length > 0) {
@@ -2502,6 +2537,7 @@ window.addEventListener('load', () => {
     updateLibrary();
     updateAPIKeyDisplay();
     playlistManager.updatePlaylistDisplay();
+    displayFeaturedPlaylists();
 });
 
 // Keyboard Shortcuts
