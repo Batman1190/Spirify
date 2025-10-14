@@ -1423,9 +1423,19 @@ function initializeYouTubePlayerControls() {
     const watchOnYoutubeBtn = document.getElementById('watchOnYoutubeBtn');
     const playerHeader = document.querySelector('.youtube-player-header');
     
-    // Load saved state (default to minimized)
-    const isMinimized = localStorage.getItem('youtube_player_minimized') === 'true';
-    if (isMinimized) {
+    // Determine default state based on device and saved preference
+    const savedState = localStorage.getItem('youtube_player_minimized');
+    let shouldMinimize;
+    
+    if (savedState !== null) {
+        // User has set a preference, respect it
+        shouldMinimize = savedState === 'true';
+    } else {
+        // No saved preference: minimize on mobile, maximize on desktop
+        shouldMinimize = isMobileDevice() || window.innerWidth <= 768;
+    }
+    
+    if (shouldMinimize) {
         playerContainer.classList.add('minimized');
     }
     
@@ -1455,6 +1465,23 @@ function initializeYouTubePlayerControls() {
             }
         });
     }
+    
+    // Re-check on window resize (orientation change)
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            // Only auto-adjust if no saved preference exists
+            if (localStorage.getItem('youtube_player_minimized') === null) {
+                const shouldBeMinimized = isMobileDevice() || window.innerWidth <= 768;
+                if (shouldBeMinimized && !playerContainer.classList.contains('minimized')) {
+                    playerContainer.classList.add('minimized');
+                } else if (!shouldBeMinimized && playerContainer.classList.contains('minimized')) {
+                    playerContainer.classList.remove('minimized');
+                }
+            }
+        }, 250);
+    });
 }
 
 // ============================================

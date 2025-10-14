@@ -2552,10 +2552,34 @@ html {
         padding: 8px 12px;
     }
     
-    /* When minimized on mobile, position just above player bar */
+    /* When minimized on mobile, show only header */
     .youtube-player-container.minimized {
-        bottom: 145px;
-        transform: translateY(0);
+        transform: translateY(calc(100% - 48px));
+    }
+    
+    /* Hide player content when minimized to save space */
+    .youtube-player-container.minimized .youtube-player-iframe,
+    .youtube-player-container.minimized .youtube-links {
+        display: none;
+    }
+    
+    /* Add visual feedback for mobile users */
+    .youtube-player-header {
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .youtube-player-header:active {
+        background: var(--bg-hover);
+    }
+    
+    /* Hint text for minimized state on mobile */
+    .youtube-player-container.minimized .youtube-attribution::after {
+        content: ' • Tap to expand';
+        font-size: 10px;
+        color: var(--text-secondary);
+        font-weight: normal;
     }
 }
 
@@ -2567,10 +2591,6 @@ html {
     
     .youtube-player-iframe {
         height: 160px; /* Further reduced for small screens */
-    }
-    
-    .youtube-player-container.minimized {
-        bottom: 165px;
     }
 }
 
@@ -2585,10 +2605,6 @@ html {
     
     .youtube-player-iframe {
         height: 150px;
-    }
-    
-    .youtube-player-container.minimized {
-        bottom: 105px;
     }
 }
 
