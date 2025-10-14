@@ -378,6 +378,45 @@ function buildSpiritualQuery(userQuery = '') {
     return `${keyword} music songs`;
 }
 
+// ============================================
+// MODAL MANAGEMENT HELPERS
+// ============================================
+
+/**
+ * Opens a modal and adds modal-open class to body
+ * This prevents YouTube player conflicts
+ */
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.classList.add('modal-open');
+    }
+}
+
+/**
+ * Closes a modal and removes modal-open class from body
+ * Only removes class if no other modals are open
+ */
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('active');
+        
+        // Check if any other modals are still open
+        const allModals = ['cassetteModal', 'playlistModal', 'addToPlaylistModal', 'apiModal'];
+        const anyModalOpen = allModals.some(id => {
+            const m = document.getElementById(id);
+            return m && m.classList.contains('active');
+        });
+        
+        // Only remove modal-open if no modals are active
+        if (!anyModalOpen) {
+            document.body.classList.remove('modal-open');
+        }
+    }
+}
+
 // Player State
 let player;
 let currentPlaylist = [];
@@ -845,7 +884,7 @@ class PlaylistManager {
         document.getElementById('playlistModalTitle').textContent = 'Edit Playlist';
         document.getElementById('playlistNameInput').value = playlist.name;
         document.getElementById('playlistDescInput').value = playlist.description;
-        document.getElementById('playlistModal').classList.add('active');
+        openModal('playlistModal');
         document.getElementById('playlistModal').dataset.editId = id;
     }
 
@@ -888,7 +927,7 @@ class PlaylistManager {
                 if (!trackExists) {
                     item.addEventListener('click', () => {
                         if (this.addTrackToPlaylist(playlist.id, track)) {
-                            modal.classList.remove('active');
+                            closeModal('addToPlaylistModal');
                             showNotification(`Added to "${playlist.name}"`, 'success');
                         }
                     });
@@ -901,7 +940,7 @@ class PlaylistManager {
             });
         }
 
-        modal.classList.add('active');
+        openModal('addToPlaylistModal');
     }
 
     async loadPresetPlaylistSongs(playlistId) {
@@ -1725,17 +1764,17 @@ document.getElementById('saveApiKey').addEventListener('click', () => {
 
 // Manage API Keys Button
 document.getElementById('manageApiKeys').addEventListener('click', () => {
-    document.getElementById('apiModal').classList.add('active');
+    openModal('apiModal');
     updateAPIKeyManagementModal();
 });
 
 document.getElementById('closeApiModal').addEventListener('click', () => {
-    document.getElementById('apiModal').classList.remove('active');
+    closeModal('apiModal');
 });
 
 document.getElementById('apiModal').addEventListener('click', (e) => {
     if (e.target === e.currentTarget) {
-        document.getElementById('apiModal').classList.remove('active');
+        closeModal('apiModal');
     }
 });
 
@@ -2293,19 +2332,19 @@ function updateVolumeIcon(volume) {
 
 // Cassette Player Modal
 document.getElementById('cassetteButton').addEventListener('click', () => {
-    document.getElementById('cassetteModal').classList.add('active');
+    openModal('cassetteModal');
     if (isPlaying) {
         startCassetteAnimation();
     }
 });
 
 document.getElementById('closeCassette').addEventListener('click', () => {
-    document.getElementById('cassetteModal').classList.remove('active');
+    closeModal('cassetteModal');
 });
 
 document.getElementById('cassetteModal').addEventListener('click', (e) => {
     if (e.target === e.currentTarget) {
-        document.getElementById('cassetteModal').classList.remove('active');
+        closeModal('cassetteModal');
     }
 });
 
@@ -2383,17 +2422,17 @@ document.getElementById('createPlaylistBtn').addEventListener('click', () => {
     document.getElementById('playlistModalTitle').textContent = 'Create Playlist';
     document.getElementById('playlistNameInput').value = '';
     document.getElementById('playlistDescInput').value = '';
-    document.getElementById('playlistModal').classList.add('active');
+    openModal('playlistModal');
     delete document.getElementById('playlistModal').dataset.editId;
     document.getElementById('playlistNameInput').focus();
 });
 
 document.getElementById('closePlaylistModal').addEventListener('click', () => {
-    document.getElementById('playlistModal').classList.remove('active');
+    closeModal('playlistModal');
 });
 
 document.getElementById('cancelPlaylistBtn').addEventListener('click', () => {
-    document.getElementById('playlistModal').classList.remove('active');
+    closeModal('playlistModal');
 });
 
 document.getElementById('savePlaylistBtn').addEventListener('click', () => {
@@ -2424,30 +2463,30 @@ document.getElementById('savePlaylistBtn').addEventListener('click', () => {
         showNotification('Playlist created!', 'success');
     }
 
-    modal.classList.remove('active');
+    closeModal('playlistModal');
     delete modal.dataset.editId;
 });
 
 document.getElementById('closeAddToPlaylistModal').addEventListener('click', () => {
-    document.getElementById('addToPlaylistModal').classList.remove('active');
+    closeModal('addToPlaylistModal');
     playlistManager.pendingTrack = null;
 });
 
 document.getElementById('createNewPlaylistFromAdd').addEventListener('click', () => {
-    document.getElementById('addToPlaylistModal').classList.remove('active');
+    closeModal('addToPlaylistModal');
     document.getElementById('createPlaylistBtn').click();
 });
 
 // Close modals on background click
 document.getElementById('playlistModal').addEventListener('click', (e) => {
     if (e.target === e.currentTarget) {
-        document.getElementById('playlistModal').classList.remove('active');
+        closeModal('playlistModal');
     }
 });
 
 document.getElementById('addToPlaylistModal').addEventListener('click', (e) => {
     if (e.target === e.currentTarget) {
-        document.getElementById('addToPlaylistModal').classList.remove('active');
+        closeModal('addToPlaylistModal');
         playlistManager.pendingTrack = null;
     }
 });
@@ -2659,7 +2698,7 @@ document.addEventListener('keydown', (e) => {
         modals.forEach(modalId => {
             const modal = document.getElementById(modalId);
             if (modal && modal.classList.contains('active')) {
-                modal.classList.remove('active');
+                closeModal(modalId);
                 if (modalId === 'addToPlaylistModal') {
                     playlistManager.pendingTrack = null;
                 }

@@ -2539,16 +2539,80 @@ html {
         right: 10px;
         left: 10px;
         width: auto;
-        bottom: 80px;
+        bottom: 150px; /* Adjusted to clear 140px player bar + 10px margin */
     }
     
     .youtube-player-iframe {
-        height: 200px;
+        height: 180px; /* Reduced height for mobile to save space */
     }
     
     .youtube-links {
         flex-wrap: wrap;
         font-size: 10px;
         padding: 8px 12px;
+    }
+    
+    /* When minimized on mobile, position just above player bar */
+    .youtube-player-container.minimized {
+        bottom: 145px;
+        transform: translateY(0);
+    }
+}
+
+/* Small Mobile Devices - Additional adjustment */
+@media (max-width: 480px) {
+    .youtube-player-container {
+        bottom: 170px; /* Adjusted to clear 160px player bar + 10px margin */
+    }
+    
+    .youtube-player-iframe {
+        height: 160px; /* Further reduced for small screens */
+    }
+    
+    .youtube-player-container.minimized {
+        bottom: 165px;
+    }
+}
+
+/* Landscape Mobile - Optimize for horizontal space */
+@media (max-width: 768px) and (orientation: landscape) {
+    .youtube-player-container {
+        bottom: 110px; /* Adjusted to clear 100px player bar + 10px margin */
+        width: 320px; /* Smaller width to not dominate landscape view */
+        right: 10px;
+        left: auto;
+    }
+    
+    .youtube-player-iframe {
+        height: 150px;
+    }
+    
+    .youtube-player-container.minimized {
+        bottom: 105px;
+    }
+}
+
+/* Tablets - Optimize positioning */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .youtube-player-container {
+        width: 360px;
+        right: 15px;
+    }
+    
+    .youtube-player-iframe {
+        height: 200px;
+    }
+}
+
+/* Reduce YouTube player z-index when body has modal-open class */
+body.modal-open .youtube-player-container {
+    z-index: 899; /* Below modals (which are z-index: 1000+) */
+    pointer-events: none; /* Prevent interactions when modal is open */
+}
+
+/* Very small screens - consider hiding player completely when minimized */
+@media (max-width: 360px) {
+    .youtube-player-container.minimized {
+        display: none;
     }
 }
