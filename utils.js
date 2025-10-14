@@ -1,4 +1,4 @@
-// Utility Functions for Musika ni Rod
+// Utility Functions for Spirify
 // Security, Performance, and Helper Functions
 
 // ============================================

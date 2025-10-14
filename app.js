@@ -1389,7 +1389,7 @@ function updateMediaSession(track) {
             navigator.mediaSession.metadata = new MediaMetadata({
                 title: track.title || 'Unknown Title',
                 artist: track.artist || 'Unknown Artist',
-                album: 'Spirify ni Rod',
+                album: 'Spirify',
                 artwork: [
                     { src: track.thumbnail || '', sizes: '96x96', type: 'image/jpeg' },
                     { src: track.thumbnail || '', sizes: '128x128', type: 'image/jpeg' },

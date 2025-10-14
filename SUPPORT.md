@@ -193,3 +193,11 @@ May God bless you abundantly for your kindness and generosity!
 **Last Updated:** October 14, 2025
 
 For the latest information, visit: [www.spirify.space](https://www.spirify.space)
+
+---
+
+## 👤 Ownership & Maintenance
+
+**Spirify** is owned and maintained by **RodC**.
+
+All rights reserved © 2025 RodC

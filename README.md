@@ -64,3 +64,17 @@ Spirify does not claim ownership of any music content displayed or streamed on t
 The purpose of this platform is to share and promote spiritual and inspirational music for listening and worship purposes only.
 
 If you are a copyright holder and believe that your work has been used inappropriately, please contact us at **musikalang1190@gmail.com** so we can review and address your concern promptly.
+
+---
+
+## 👤 Ownership & Maintenance
+
+**Spirify** is owned and maintained by **RodC**.
+
+All rights reserved © 2025 RodC
+
+For inquiries, please contact: musikalang1190@gmail.com
+
+---
+
+**Spirify** – *Tuning hearts to heaven, one song at a time.* 🎵

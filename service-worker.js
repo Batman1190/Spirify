@@ -1,7 +1,7 @@
-// Service Worker for Spirify ni Rod
+// Service Worker for Spirify
 // Enables offline functionality and PWA capabilities
 
-const CACHE_NAME = 'spirify-ni-rod-v1.1';
+const CACHE_NAME = 'spirify-v1.2';
 const urlsToCache = [
     '/',
     '/index.html',
