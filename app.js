@@ -1285,14 +1285,14 @@ window.localFileManager = localFileManager;
 // Initialize YouTube Player API
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('youtubePlayer', {
-        height: '1',     // Minimum size (not 0) for background playback on mobile
-        width: '1',      // Minimum size (not 0) for background playback on mobile
+        height: '100%',
+        width: '100%',
         playerVars: {
             'playsinline': 1,           // Required for iOS inline playback
-            'controls': 0,
-            'modestbranding': 1,
-            'rel': 0,                   // Don't show related videos
-            'fs': 0,                    // Hide fullscreen button on mobile
+            'controls': 1,              // Show YouTube controls (required for policy compliance)
+            'modestbranding': 0,        // Show YouTube branding (required for policy compliance)
+            'rel': 1,                   // Show related videos (YouTube requirement)
+            'fs': 1,                    // Show fullscreen button
             'enablejsapi': 1,           // Enable JavaScript API
             'origin': window.location.origin,  // Security requirement
             'widget_referrer': window.location.origin,
@@ -1319,6 +1319,9 @@ function onPlayerReady(event) {
             console.warn('Could not mute player:', e);
         }
     }
+    
+    // Initialize player container controls
+    initializeYouTubePlayerControls();
 }
 
 // Mobile device detection
@@ -1372,6 +1375,47 @@ function onPlayerError(event) {
     setTimeout(() => {
         playNext();
     }, 500);
+}
+
+// Initialize YouTube Player Container Controls
+function initializeYouTubePlayerControls() {
+    const playerContainer = document.getElementById('youtubePlayerContainer');
+    const toggleBtn = document.getElementById('togglePlayerBtn');
+    const watchOnYoutubeBtn = document.getElementById('watchOnYoutubeBtn');
+    const playerHeader = document.querySelector('.youtube-player-header');
+    
+    // Load saved state (default to minimized)
+    const isMinimized = localStorage.getItem('youtube_player_minimized') === 'true';
+    if (isMinimized) {
+        playerContainer.classList.add('minimized');
+    }
+    
+    // Toggle player visibility
+    if (toggleBtn && playerHeader) {
+        const togglePlayer = () => {
+            playerContainer.classList.toggle('minimized');
+            const nowMinimized = playerContainer.classList.contains('minimized');
+            localStorage.setItem('youtube_player_minimized', nowMinimized);
+        };
+        
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            togglePlayer();
+        });
+        
+        playerHeader.addEventListener('click', togglePlayer);
+    }
+    
+    // Watch on YouTube button
+    if (watchOnYoutubeBtn) {
+        watchOnYoutubeBtn.addEventListener('click', () => {
+            if (player && currentPlaylist.length > 0) {
+                const currentVideoId = currentPlaylist[currentTrackIndex].id;
+                const youtubeUrl = `https://www.youtube.com/watch?v=${currentVideoId}`;
+                window.open(youtubeUrl, '_blank', 'noopener,noreferrer');
+            }
+        });
+    }
 }
 
 // ============================================
@@ -1966,6 +2010,12 @@ function playTrack(track) {
         player.loadVideoById(track.id);
         updateTrackInfo(track);
         addToRecentlyPlayed(track);
+        
+        // Enable "Watch on YouTube" button
+        const watchBtn = document.getElementById('watchOnYoutubeBtn');
+        if (watchBtn) {
+            watchBtn.disabled = false;
+        }
         
         // Handle mobile autoplay restrictions
         if (isMobileDevice()) {
