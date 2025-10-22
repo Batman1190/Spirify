@@ -19,7 +19,7 @@ We believe that sound has the power to heal, inspire, and connect hearts—beyon
 - Seamless music streaming experience.
 - Personalized playlists for prayer, focus, or relaxation.
 - Explore by mood, belief, or theme.
-- Dark, minimalist design for distraction-free listening.
+- Clean, white, and heavenly design for a bright, peaceful listening experience.
 
 ## 🧭 Our Vision
 
